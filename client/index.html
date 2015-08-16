@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>Sheremetievo Airport Timetable</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>Онлайн-табло аэропорта Шереметьево</h1>
+            </div>
+        </header>
+        <main>
+            <div class="tabs">
+                <form>
+                    <input type="radio" name="dirtype" id="depart">Вылет
+                    <input type="radio" name="dirtype" id="arrive"> Прилет
+                    <input type="radio" name="dirtype" id="all" checked="checked"> Все
+                </form>
+            </div>
+            <div class="tableContainer">
+                <table border="0" cellpadding="0" cellspacing="0" class="scrollTable">
+                    <thead class="fixedHeader">
+                        <tr>
+                            <th class="type">Вылет/Прилет</th>
+                            <th class="number">№ рейса</th>
+                            <th class="airline">Авиакомпания</th>
+                            <th class="logo">Логотип</th>
+                            <th class="plane">Тип самолета</th>
+                            <th class="destination">Аэропорт назначения</th>
+                            <th class="time">Время по расписанию</th>
+                            <th class="status">Статус</th>
+                            <th class="comments">Примечание</th>
+                        </tr>
+                    </thead>
+                    <tbody class="scrollBody"></tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <div class="container">
+                <div class="contacts">
+                    <p>Россия, 141400, Московская обл., г. Химки а/п Шереметьево</p>
+                    <p>АО «Международный аэропорт Шереметьево»</p>
+                    <p>Контакт-центр: +7(495)578-65-65; +7(925)100-65-65</p>
+                </div>
+                <div class="scheme">
+                    <a href="images/SVOscheme.jpg"><img src="images/SVOscheme.jpg" width="160" height="140"></a>
+                </div>
+            </div>
+        </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="scripts/app.js"></script>
+    </body>
+</html>
