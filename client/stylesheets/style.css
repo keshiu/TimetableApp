@@ -47,6 +47,26 @@ html > body div.tableContainer table {
   width: 999px;
 }
 
+.scrollBody td {
+  font-weight: normal;
+  padding: 4px 0;
+  cursor: pointer;
+  width: 111px;
+  text-align: center;
+}
+
+.scrollBody tr:nth-child(odd) {
+  background: #EEE;
+  border: none;
+  padding: 2px 3px 3px 4px;
+}
+
+.scrollBody tr:nth-child(even) {
+  background: #FFFFFF;
+  border: none;
+  padding: 2px 3px 3px 4px;
+}
+
 footer {
   overflow: auto;
 }
