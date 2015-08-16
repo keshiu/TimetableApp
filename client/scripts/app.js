@@ -161,6 +161,23 @@ var main = function( airlinesWithRepeat ) {
     } )
     .done( onsuccessArrive )
     .fail( onerror );
+
+    var departBox = document.querySelector( "#depart" ),
+    arriveBox = document.querySelector( "#arrive" ),
+    allBox = document.querySelector( "#all" );
+
+    departBox.onclick = function() {
+        $( "main .depart" ).fadeIn();
+        $( "main .arrive" ).fadeOut();
+    };
+    arriveBox.onclick = function() {
+        $( "main .arrive" ).fadeIn();
+        $( "main .depart" ).fadeOut();
+    };
+    allBox.onclick = function() {
+        $( "main .depart" ).fadeIn();
+        $( "main .arrive" ).fadeIn();
+    };
 };
 $( document ).ready( function() {
     $.getJSON( "/airlines.json", function( data ) {
