@@ -1,5 +1,5 @@
 "use strict";
-var main = function( data ) {
+var main = function( airlinesWithRepeat ) {
     var flightStatusesBase = [], // массив только с нужными для табло данными о рейсах
     loadDepartBase = false,
     loadArriveBase = false;
