@@ -112,3 +112,21 @@ footer {
   float: right;
   margin: 0 0 5px 0;
 }
+
+@media screen and (max-width: 900px) {
+  .airline {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .status {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .plane {
+    display: none;
+  }
+}
