@@ -6,11 +6,13 @@ var main = function( airlinesWithRepeat ) {
 
     var findFieldValue = function( base, code ) { // функция находит пару, содержащую заданное значение свойства и возвращает второе значение
         var found = false,
+        hasAirlineLogo = false,
         requestedField = "";
 
         base.forEach( function( item ) {
             if ( ( "airlineCode" in item ) && ( item.airlineCode === code ) && ( found === false ) ) { // если подгружен массив airlinesWithRepeat
                 found = true;
+                hasAirlineLogo = true;
                 requestedField = item.airlineLogoUrlPng;
             } else if ( ( "fs" in item ) && ( item.fs === code ) && ( found === false ) ) { // если подгружен массив *Airports
                 found = true;
@@ -18,11 +20,16 @@ var main = function( airlinesWithRepeat ) {
             } else if ( ( "iata" in item ) && ( item.iata === code ) && ( found === false ) ) { // если подгружен массив *Equipments
                 found = true;
                 requestedField = item.name;
+            } else if (("airlineCode" in item) && (found === false)) {
+                hasAirlineLogo = false;
             }
         } );
+        if ( (hasAirlineLogo === false) && (found === false) ) {
+            requestedField = "https://d3o54sf0907rz4.cloudfront.net/airline-logos/v2/centered/logos/png/300x100/ju-logo.png";
+        }
         return ( requestedField );
-    };
-    var filterBase = function( base ) { // функция возвращает массив, содержащий объекты с только нужными нам свойства
+    },
+    filterBase = function( base ) { // функция возвращает массив, содержащий объекты с только нужными нам свойства
         var filteredBase = [],
         i = 0;
 
@@ -42,12 +49,12 @@ var main = function( airlinesWithRepeat ) {
             }
         } );
         return ( filteredBase );
-    };
-    var compareTime = function( a, b ) { // функция, описывающая метод сортировки базы рейсов по времени по расписанию
+    },
+    compareTime = function( a, b ) { // функция, описывающая метод сортировки базы рейсов по времени по расписанию
         if ( a.sheduledTime > b.sheduledTime ) return 1;
         if ( a.sheduledTime < b.sheduledTime ) return -1;
-    };
-    var arrayToTable = function( base ) { // превращает массив объектов в таблицу
+    },
+    arrayToTable = function( base ) { // превращает массив объектов в таблицу
         if ( ( loadDepartBase === true ) && ( loadArriveBase === true ) ) {
             base.sort( compareTime ); // сортируем таблицу по возрастанию времени рейса по расписанию
             base.forEach( function( item ) {
@@ -72,8 +79,8 @@ var main = function( airlinesWithRepeat ) {
                 $( "table" ).find( "tbody" ).append( $tr );
             } );
         }
-    };
-    var onsuccessDepart = function( data ) { //функция обработки ответа по вылетам
+    },
+    onsuccessDepart = function( data ) { //функция обработки ответа по вылетам
         var departFlightStatuses = data.flightStatuses, //все данные о рейсах от FlightStats
         departEquipments = filterBase( data.appendix.equipments ), //только нужные нам данные о вылетающих самолетах
         departAirports = filterBase( data.appendix.airports ); // только нужные нам данные об аэропортах назначения
@@ -104,9 +111,8 @@ var main = function( airlinesWithRepeat ) {
         } );
         loadDepartBase = true;
         arrayToTable( flightStatusesBase );
-    };
-
-    var onsuccessArrive = function( data ) { //функция обработки ответа по прилетам
+    },
+    onsuccessArrive = function( data ) { //функция обработки ответа по прилетам
         var arriveFlightStatuses = data.flightStatuses, //все данные о рейсах от FlightStats
         arriveEquipments = filterBase( data.appendix.equipments ),
         arriveAirports = filterBase( data.appendix.airports );
@@ -135,15 +141,18 @@ var main = function( airlinesWithRepeat ) {
         } );
         loadArriveBase = true;
         arrayToTable( flightStatusesBase );
-    };
-    var onerror = function() {
+    },
+    onerror = function() {
         alert( "error" );
     };
+
     var today = new Date(),
     day = today.getDate(),
     hour = today.getHours(),
-    departUrl = "https://api.flightstats.com/flex/flightstatus/rest/v2/jsonp/airport/status/SVO/dep/2015/8/" + day + "/" + hour + "?appId=6b5959c3&appKey=eb2505539470ee19b8764dddfec358be&utc=false&numHours=4&maxFlights=100",
-    arriveUrl = "https://api.flightstats.com/flex/flightstatus/rest/v2/jsonp/airport/status/SVO/arr/2015/8/" + day + "/" + hour + "?appId=6b5959c3&appKey=eb2505539470ee19b8764dddfec358be&utc=false&numHours=4&maxFlights=100";
+    departUrl = "https://api.flightstats.com/flex/flightstatus/rest/v2/jsonp/airport/status/SVO/dep/2015/8/" +
+    day + "/" + hour + "?appId=6b5959c3&appKey=eb2505539470ee19b8764dddfec358be&utc=false&numHours=4&maxFlights=100",
+    arriveUrl = "https://api.flightstats.com/flex/flightstatus/rest/v2/jsonp/airport/status/SVO/arr/2015/8/" +
+    day + "/" + hour + "?appId=6b5959c3&appKey=eb2505539470ee19b8764dddfec358be&utc=false&numHours=4&maxFlights=100";
 
     $.ajax( {
         dataType: "jsonp",
